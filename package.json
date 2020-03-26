@@ -1,0 +1,24 @@
+{
+  "name": "derek-cv",
+  "version": "1.0.0",
+  "description": "Resume Website",
+  "main": "index.js",
+  "dependencies": {
+    "tailwindcss": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build.css": "tailwind build src/styles.css -o dist/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekcsm/derek-cv.git"
+  },
+  "author": "derekcsm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derekcsm/derek-cv/issues"
+  },
+  "homepage": "https://github.com/derekcsm/derek-cv#readme"
+}
