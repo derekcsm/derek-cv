@@ -2,7 +2,7 @@
   "name": "derek-cv",
   "version": "1.0.0",
   "description": "Resume Website",
-  "main": "index.js",
+  "main": "dist/index.html",
   "dependencies": {
     "tailwindcss": "^1.2.0"
   },
