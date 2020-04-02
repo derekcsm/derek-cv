@@ -2,26 +2,29 @@
 
 <head>
   <link rel="stylesheet" href="/dist/styles.css">
+  <link rel="stylesheet" href="/src/decorative.css">
   <script src="https://unpkg.com/tone"></script>
   <script src="https://unpkg.com/@tonejs/ui"></script>
   <script src="dist/main.js"></script>
   <title>Derek CV</title>
 </head>
 
-<body class="bg-pink-300">
-  <div class="container">
+<body class="bg-pink-100">
 
-    <div class="flex justify-center p-4">
-      <button id="toneButton" class="btn justify-center bg-white hover:bg-white text-black rounded">
-        Play a sound!
-      </button>
+  <div id="chordKeyboard" class="grid grid-cols-4 h-24 grid-rows-1 gap-4 flex-wrap">
+    <div id="chord1" class="w-1/1 bg-black"></div>
 
+    <div id="chord2" class="w-1/1 bg-black"></div>
 
-    </div>
+    <div id="chord3" class="w-1/1 bg-black"></div>
 
-    <tone-keyboard octaves="4"></tone-keyboard>
-    
+    <div id="chord4" class="w-1/1 bg-black"></div>
+
   </div>
+
+  <div class="container">
+  </div>
+
 </body>
 
 </html>

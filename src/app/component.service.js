@@ -1,45 +1,283 @@
 import * as Tone from "tone";
-var freeverb = new Tone.Freeverb().toMaster();
-freeverb.dampening.value = 7000;
-freeverb.roomSize.value = 0.7;
+import * as rebound from "rebound";
 
-var pingPong = new Tone.PingPongDelay("8n", 0.2).toMaster();
+var springSystem = new rebound.SpringSystem();
+var spring1 = springSystem.createSpring(54, 20);
+var spring2 = springSystem.createSpring(54, 20);
+var spring3 = springSystem.createSpring(54, 20);
+var spring4 = springSystem.createSpring(54, 20);
 
-var synth = new Tone.PolySynth(6, Tone.FMSynth, {
-  oscillator: {
-    type: "sine"
-  }
-})
-  .toMaster();
+var sound1Layout;
+var sound2Layout;
+var sound3Layout;
+var sound4Layout;
 
 export class ComponentService {
 
   constructor() {
-
-    synth.set({
-      "detune": -1200,
+    var poly = new Tone.PolySynth(6, Tone.FMSynth, {
       "volume": -12,
+      "harmonicity": 8,
+      "modulationIndex": 6,
+      "oscillator": {
+        "type": "sine"
+      },
       "envelope": {
-        "attack": 0.01,
-        "decay": 1.20,
-        "sustain": 0.0,
-        "release": 1.2
+        "attack": 0.001,
+        "decay": 2,
+        "sustain": 0.4,
+        "release": 1.5
+      },
+      "modulation": {
+        "type": "square"
+      },
+      "modulationEnvelope": {
+        "attack": 0.002,
+        "decay": 0.2,
+        "sustain": 0,
+        "release": 0.3
       }
-    });
+    }).toMaster();
 
     window.onload = function () {
-      this.toneButton = document.getElementById("toneButton");
-      this.toneButton.addEventListener("mousedown", () => {
-        synth.triggerAttackRelease(["C4", "E4", "A4"], "4n");
+      sound1Layout = document.getElementById("chord1");
+      sound2Layout = document.getElementById("chord2");
+      sound3Layout = document.getElementById("chord3");
+      sound4Layout = document.getElementById("chord4");
+
+      document.addEventListener("keydown", (key) => {
+        if (key.repeat) {
+          return;
+        }
+
+        if (key.Handled) {
+          return;
+        }
+
+        console.log("keydown: " + key.code);
+
+        switch (key.code) {
+          case "Digit1":
+            playSound1(true);
+            break;
+          case "Digit2":
+            playSound2(true);
+            break;
+          case "Digit3":
+            playSound3(true);
+            break;
+          case "Digit4":
+            playSound4(true);
+            break;
+        }
+
+        key.Handled = true;
       });
 
-      document.querySelector('tone-keyboard').addEventListener('noteon', e => {
-        synth.triggerAttack(e.detail.name);
-      })
-      document.querySelector('tone-keyboard').addEventListener('noteoff', e => {
-        synth.triggerRelease(e.detail.name)
-      })
+      document.addEventListener("keyup", (key) => {
+        console.log("keyup: " + key.code);
+
+        key.stopImmediatePropagation();
+
+        switch (key.code) {
+          case "Digit1":
+            playSound1(false);
+            break;
+          case "Digit2":
+            playSound2(false);
+            break;
+          case "Digit3":
+            playSound3(false);
+            break;
+          case "Digit4":
+            playSound4(false);
+            break;
+        }
+      });
+
+      connectEventListeners();
+
+      connectAnimationListeners();
+    }
+
+    let sound1Playing = false;
+    function playSound1(clickDown) {
+      if (clickDown && sound1Playing) {
+        return;
+      }
+
+      if (clickDown) {
+        sound1Playing = true;
+        poly.triggerAttack(["C#4"]);
+        spring1.setEndValue(1);
+      } else {
+        sound1Playing = false;
+        poly.triggerRelease(["C#4"]);
+        spring1.setEndValue(0);
+      }
+    }
+
+    let sound2Playing = false;
+    function playSound2(clickDown) {
+      if (clickDown && sound2Playing) {
+        return;
+      }
+
+      if (clickDown) {
+        sound2Playing = true;
+        poly.triggerAttack(["E#4"]);
+        spring2.setEndValue(1);
+      } else {
+        sound2Playing = false;
+        poly.triggerRelease(["E#4"]);
+        spring2.setEndValue(0);
+      }
+    }
+
+    let sound3Playing = false;
+    function playSound3(clickDown) {
+      if (clickDown && sound3Playing) {
+        return;
+      }
+
+      if (clickDown) {
+        sound3Playing = true;
+        poly.triggerAttack(["G#4"]);
+        spring3.setEndValue(1);
+      } else {
+        sound3Playing = false;
+        poly.triggerRelease(["G#4"]);
+        spring3.setEndValue(0);
+      }
+    }
+
+    let sound4Playing = false;
+    function playSound4(clickDown) {
+      if (clickDown && sound4Playing) {
+        return;
+      }
+
+      if (clickDown) {
+        sound4Playing = true;
+        poly.triggerAttack(["B#4"]);
+        spring4.setEndValue(1);
+      } else {
+        sound4Playing = false;
+        poly.triggerRelease(["B#4"]);
+        spring4.setEndValue(0);
+      }
+    }
+
+    function connectEventListeners() {
+      sound1Layout.addEventListener("mousedown", () => {
+        playSound1(true);
+      });
+      sound1Layout.addEventListener("touchstart", () => {
+        playSound1(true);
+      });
+      sound1Layout.addEventListener("mouseup", () => {
+        playSound1(false);
+      });
+      sound1Layout.addEventListener("mousemove", () => {
+        playSound1(false);
+      });
+      sound1Layout.addEventListener("touchend", () => {
+        playSound1(false);
+      });
+
+      sound2Layout.addEventListener("mousedown", () => {
+        playSound2(true);
+      });
+      sound2Layout.addEventListener("touchstart", () => {
+        playSound2(true);
+      });
+      sound2Layout.addEventListener("mouseup", () => {
+        playSound2(false);
+      });
+      sound2Layout.addEventListener("mousemove", () => {
+        playSound2(false);
+      });
+      sound2Layout.addEventListener("touchend", () => {
+        playSound2(false);
+      });
+
+      sound3Layout.addEventListener("mousedown", () => {
+        playSound3(true);
+      });
+      sound3Layout.addEventListener("touchstart", () => {
+        playSound3(true);
+      });
+      sound3Layout.addEventListener("mouseup", () => {
+        playSound3(false);
+      });
+      sound3Layout.addEventListener("mousemove", () => {
+        playSound3(false);
+      });
+      sound3Layout.addEventListener("touchend", () => {
+        playSound3(false);
+      });
+
+      sound4Layout.addEventListener("mousedown", () => {
+        playSound4(true);
+      });
+      sound4Layout.addEventListener("touchstart", () => {
+        playSound4(true);
+      });
+      sound4Layout.addEventListener("mouseup", () => {
+        playSound4(false);
+      });
+      sound4Layout.addEventListener("mousemove", () => {
+        playSound4(false);
+      });
+      sound4Layout.addEventListener("touchend", () => {
+        playSound4(false);
+      });
+    }
+
+    function connectAnimationListeners() {
+      spring1.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound1Layout, val);
+        }
+      });
+
+      spring2.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound2Layout, val);
+        }
+      });
+
+      spring3.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound3Layout, val);
+        }
+      });
+
+      spring4.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound4Layout, val);
+        }
+      });
+    }
+
+    function scale(el, val) {
+      el.style.mozTransform =
+        el.style.msTransform =
+        el.style.webkitTransform =
+        el.style.transform = 'scale3d(' +
+        val + ', ' + val + ', 1)';
     }
   }
-
 }
