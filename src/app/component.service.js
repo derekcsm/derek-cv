@@ -7,6 +7,11 @@ var spring2 = springSystem.createSpring(54, 20);
 var spring3 = springSystem.createSpring(54, 20);
 var spring4 = springSystem.createSpring(54, 20);
 
+var sound1Layout;
+var sound2Layout;
+var sound3Layout;
+var sound4Layout;
+
 export class ComponentService {
 
   constructor() {
@@ -35,10 +40,10 @@ export class ComponentService {
     }).toMaster();
 
     window.onload = function () {
-      this.chord1 = document.getElementById("chord1");
-      this.chord2 = document.getElementById("chord2");
-      this.chord3 = document.getElementById("chord3");
-      this.chord4 = document.getElementById("chord4");
+      sound1Layout = document.getElementById("chord1");
+      sound2Layout = document.getElementById("chord2");
+      sound3Layout = document.getElementById("chord3");
+      sound4Layout = document.getElementById("chord4");
 
       document.addEventListener("keydown", (key) => {
         if (key.repeat) {
@@ -49,20 +54,20 @@ export class ComponentService {
           return;
         }
 
-        this.console.log("keydown: " + key.code);
+        console.log("keydown: " + key.code);
 
         switch (key.code) {
-          case "KeyR":
-            playChord1(true);
+          case "Digit1":
+            playSound1(true);
             break;
-          case "KeyT":
-            playChord2(true);
+          case "Digit2":
+            playSound2(true);
             break;
-          case "KeyY":
-            playChord3(true);
+          case "Digit3":
+            playSound3(true);
             break;
-          case "KeyU":
-            playChord4(true);
+          case "Digit4":
+            playSound4(true);
             break;
         }
 
@@ -70,179 +75,209 @@ export class ComponentService {
       });
 
       document.addEventListener("keyup", (key) => {
-        this.console.log("keyup: " + key.code);
+        console.log("keyup: " + key.code);
 
         key.stopImmediatePropagation();
 
         switch (key.code) {
-          case "KeyR":
-            playChord1(false);
+          case "Digit1":
+            playSound1(false);
             break;
-          case "KeyT":
-            playChord2(false);
+          case "Digit2":
+            playSound2(false);
             break;
-          case "KeyY":
-            playChord3(false);
+          case "Digit3":
+            playSound3(false);
             break;
-          case "KeyU":
-            playChord4(false);
+          case "Digit4":
+            playSound4(false);
             break;
         }
       });
 
-      this.chord1.addEventListener("mousedown", () => {
-        playChord1(true);
-      });
-      this.chord1.addEventListener("mouseup", () => {
-        playChord1(false);
-      });
-      this.chord1.addEventListener("mousemove", () => {
-        playChord1(false);
-      });
-      this.chord2.addEventListener("mousedown", () => {
-        playChord2(true);
-      });
-      this.chord2.addEventListener("mouseup", () => {
-        playChord2(false);
-      });
-      this.chord2.addEventListener("mousemove", () => {
-        playChord2(false);
-      });
-      this.chord3.addEventListener("mousedown", () => {
-        playChord3(true);
-      });
-      this.chord3.addEventListener("mouseup", () => {
-        playChord3(false);
-      });
-      this.chord3.addEventListener("mousemove", () => {
-        playChord3(false);
-      });
-      this.chord4.addEventListener("mousedown", () => {
-        playChord4(true);
-      });
-      this.chord4.addEventListener("mouseup", () => {
-        playChord4(false);
-      });
-      this.chord4.addEventListener("mousemove", () => {
-        playChord4(false);
-      });
+      connectEventListeners();
 
-      // ----
-      // Animation setup
-      spring1.addListener({
-        onSpringUpdate: function(spring) {
-          var val = spring.getCurrentValue();
-          val = rebound.MathUtil
-                       .mapValueInRange(val, 0, 1, 1, 0.5);
-          scale(chord1, val);
-        }
-      });
-
-      spring2.addListener({
-        onSpringUpdate: function(spring) {
-          var val = spring.getCurrentValue();
-          val = rebound.MathUtil
-                       .mapValueInRange(val, 0, 1, 1, 0.5);
-          scale(chord2, val);
-        }
-      });
-
-      spring3.addListener({
-        onSpringUpdate: function(spring) {
-          var val = spring.getCurrentValue();
-          val = rebound.MathUtil
-                       .mapValueInRange(val, 0, 1, 1, 0.5);
-          scale(chord3, val);
-        }
-      });
-
-      spring4.addListener({
-        onSpringUpdate: function(spring) {
-          var val = spring.getCurrentValue();
-          val = rebound.MathUtil
-                       .mapValueInRange(val, 0, 1, 1, 0.5);
-          scale(chord4, val);
-        }
-      });
+      connectAnimationListeners();
     }
 
-    let chord1Playing = false;
-    function playChord1(clickDown) {
-      if (clickDown && chord1Playing) {
+    let sound1Playing = false;
+    function playSound1(clickDown) {
+      if (clickDown && sound1Playing) {
         return;
       }
 
       if (clickDown) {
-        chord1Playing = true;
-        poly.triggerAttack(["B4", "D4", "F#4"]);
+        sound1Playing = true;
+        poly.triggerAttack(["C#4"]);
         spring1.setEndValue(1);
       } else {
-        chord1Playing = false;
-        poly.triggerRelease(["B4", "D4", "F#4"]);
+        sound1Playing = false;
+        poly.triggerRelease(["C#4"]);
         spring1.setEndValue(0);
       }
     }
 
-    let chord2Playing = false;
-    function playChord2(clickDown) {
-      if (clickDown && chord2Playing) {
+    let sound2Playing = false;
+    function playSound2(clickDown) {
+      if (clickDown && sound2Playing) {
         return;
       }
 
       if (clickDown) {
-        chord2Playing = true;
-        poly.triggerAttack(["F#4", "A4", "C#4"]);
+        sound2Playing = true;
+        poly.triggerAttack(["E#4"]);
         spring2.setEndValue(1);
       } else {
-        chord2Playing = false;
-        poly.triggerRelease(["F#4", "A4", "C#4"]);
+        sound2Playing = false;
+        poly.triggerRelease(["E#4"]);
         spring2.setEndValue(0);
       }
     }
 
-    let chord3Playing = false;
-    function playChord3(clickDown) {
-      if (clickDown && chord3Playing) {
+    let sound3Playing = false;
+    function playSound3(clickDown) {
+      if (clickDown && sound3Playing) {
         return;
       }
 
       if (clickDown) {
-        chord3Playing = true;
-        poly.triggerAttack(["C#4", "E4", "G#4"]);
+        sound3Playing = true;
+        poly.triggerAttack(["G#4"]);
         spring3.setEndValue(1);
       } else {
-        chord3Playing = false;
-        poly.triggerRelease(["C#4", "E4", "G#4"]);
+        sound3Playing = false;
+        poly.triggerRelease(["G#4"]);
         spring3.setEndValue(0);
       }
     }
 
-    let chord4Playing = false;
-    function playChord4(clickDown) {
-      if (clickDown && chord4Playing) {
+    let sound4Playing = false;
+    function playSound4(clickDown) {
+      if (clickDown && sound4Playing) {
         return;
       }
 
       if (clickDown) {
-        chord4Playing = true;
-        poly.triggerAttack(["C#4", "E#4", "G#4", "B4"]);
+        sound4Playing = true;
+        poly.triggerAttack(["B#4"]);
         spring4.setEndValue(1);
       } else {
-        chord4Playing = false;
-        poly.triggerRelease(["C#4", "E#4", "G#4", "B4"]);
+        sound4Playing = false;
+        poly.triggerRelease(["B#4"]);
         spring4.setEndValue(0);
       }
     }
-    
-    // -- animations
+
+    function connectEventListeners() {
+      sound1Layout.addEventListener("mousedown", () => {
+        playSound1(true);
+      });
+      sound1Layout.addEventListener("touchstart", () => {
+        playSound1(true);
+      });
+      sound1Layout.addEventListener("mouseup", () => {
+        playSound1(false);
+      });
+      sound1Layout.addEventListener("mousemove", () => {
+        playSound1(false);
+      });
+      sound1Layout.addEventListener("touchend", () => {
+        playSound1(false);
+      });
+
+      sound2Layout.addEventListener("mousedown", () => {
+        playSound2(true);
+      });
+      sound2Layout.addEventListener("touchstart", () => {
+        playSound2(true);
+      });
+      sound2Layout.addEventListener("mouseup", () => {
+        playSound2(false);
+      });
+      sound2Layout.addEventListener("mousemove", () => {
+        playSound2(false);
+      });
+      sound2Layout.addEventListener("touchend", () => {
+        playSound2(false);
+      });
+
+      sound3Layout.addEventListener("mousedown", () => {
+        playSound3(true);
+      });
+      sound3Layout.addEventListener("touchstart", () => {
+        playSound3(true);
+      });
+      sound3Layout.addEventListener("mouseup", () => {
+        playSound3(false);
+      });
+      sound3Layout.addEventListener("mousemove", () => {
+        playSound3(false);
+      });
+      sound3Layout.addEventListener("touchend", () => {
+        playSound3(false);
+      });
+
+      sound4Layout.addEventListener("mousedown", () => {
+        playSound4(true);
+      });
+      sound4Layout.addEventListener("touchstart", () => {
+        playSound4(true);
+      });
+      sound4Layout.addEventListener("mouseup", () => {
+        playSound4(false);
+      });
+      sound4Layout.addEventListener("mousemove", () => {
+        playSound4(false);
+      });
+      sound4Layout.addEventListener("touchend", () => {
+        playSound4(false);
+      });
+    }
+
+    function connectAnimationListeners() {
+      spring1.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound1Layout, val);
+        }
+      });
+
+      spring2.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound2Layout, val);
+        }
+      });
+
+      spring3.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound3Layout, val);
+        }
+      });
+
+      spring4.addListener({
+        onSpringUpdate: function (spring) {
+          var val = spring.getCurrentValue();
+          val = rebound.MathUtil
+            .mapValueInRange(val, 0, 1, 1, 0.5);
+          scale(sound4Layout, val);
+        }
+      });
+    }
 
     function scale(el, val) {
       el.style.mozTransform =
-      el.style.msTransform =
-      el.style.webkitTransform =
-      el.style.transform = 'scale3d(' +
+        el.style.msTransform =
+        el.style.webkitTransform =
+        el.style.transform = 'scale3d(' +
         val + ', ' + val + ', 1)';
     }
-
   }
 }
