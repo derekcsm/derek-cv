@@ -191,8 +191,11 @@ export class ComponentService {
       sound1Layout.addEventListener("mousedown", () => {
         playSound1(true);
       });
-      sound1Layout.addEventListener("touchstart", () => {
+      sound1Layout.addEventListener("touchstart", (e) => {
         playSound1(true);
+        e.stopPropagation();
+        e.preventDefault();
+        return;
       });
       sound1Layout.addEventListener("mouseup", () => {
         playSound1(false);
@@ -207,8 +210,11 @@ export class ComponentService {
       sound2Layout.addEventListener("mousedown", () => {
         playSound2(true);
       });
-      sound2Layout.addEventListener("touchstart", () => {
+      sound2Layout.addEventListener("touchstart", (e) => {
         playSound2(true);
+        e.stopPropagation();
+        e.preventDefault();
+        return;
       });
       sound2Layout.addEventListener("mouseup", () => {
         playSound2(false);
@@ -223,8 +229,11 @@ export class ComponentService {
       sound3Layout.addEventListener("mousedown", () => {
         playSound3(true);
       });
-      sound3Layout.addEventListener("touchstart", () => {
+      sound3Layout.addEventListener("touchstart", (e) => {
         playSound3(true);
+        e.stopPropagation();
+        e.preventDefault();
+        return;
       });
       sound3Layout.addEventListener("mouseup", () => {
         playSound3(false);
@@ -239,8 +248,11 @@ export class ComponentService {
       sound4Layout.addEventListener("mousedown", () => {
         playSound4(true);
       });
-      sound4Layout.addEventListener("touchstart", () => {
+      sound4Layout.addEventListener("touchstart", (e) => {
         playSound4(true);
+        e.stopPropagation();
+        e.preventDefault();
+        return;
       });
       sound4Layout.addEventListener("mouseup", () => {
         playSound4(false);
