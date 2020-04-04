@@ -2,10 +2,10 @@ import * as Tone from "tone";
 import * as rebound from "rebound";
 
 var springSystem = new rebound.SpringSystem();
-var spring1 = springSystem.createSpring(54, 20);
-var spring2 = springSystem.createSpring(54, 20);
-var spring3 = springSystem.createSpring(54, 20);
-var spring4 = springSystem.createSpring(54, 20);
+var spring1 = springSystem.createSpring(58, 9);
+var spring2 = springSystem.createSpring(58, 9);
+var spring3 = springSystem.createSpring(58, 9);
+var spring4 = springSystem.createSpring(58, 9);
 
 var sound1Layout;
 var sound2Layout;
@@ -15,8 +15,24 @@ var sound4Layout;
 export class ComponentService {
 
   constructor() {
+
+    document.documentElement.addEventListener(
+      "mousedown", function () {
+        mouse_IsDown = true;
+        if (Tone.context.state !== 'running') {
+          Tone.context.resume();
+        }
+      })
+
+    var phaser = new Tone.Phaser({
+      "frequency": 20,
+      "octaves": 2,
+      "Q": 10,
+      "baseFrequency": 1600
+    }).toMaster();
+
     var poly = new Tone.PolySynth(6, Tone.FMSynth, {
-      "volume": -12,
+      "volume": -6,
       "harmonicity": 8,
       "modulationIndex": 6,
       "oscillator": {
@@ -26,7 +42,7 @@ export class ComponentService {
         "attack": 0.001,
         "decay": 2,
         "sustain": 0.4,
-        "release": 1.5
+        "release": 1.8
       },
       "modulation": {
         "type": "square"
@@ -37,7 +53,10 @@ export class ComponentService {
         "sustain": 0,
         "release": 0.3
       }
-    }).toMaster();
+    });
+
+    poly.connect(phaser);
+    poly.toMaster()
 
     window.onload = function () {
       sound1Layout = document.getElementById("sound1");
@@ -108,11 +127,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound1Playing = true;
-        poly.triggerAttack(["C#4"]);
+        poly.triggerAttack(["C#3"]);
         spring1.setEndValue(1);
       } else {
         sound1Playing = false;
-        poly.triggerRelease(["C#4"]);
+        poly.triggerRelease(["C#3"]);
         spring1.setEndValue(0);
       }
     }
@@ -125,11 +144,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound2Playing = true;
-        poly.triggerAttack(["E#4"]);
+        poly.triggerAttack(["E#3"]);
         spring2.setEndValue(1);
       } else {
         sound2Playing = false;
-        poly.triggerRelease(["E#4"]);
+        poly.triggerRelease(["E#3"]);
         spring2.setEndValue(0);
       }
     }
@@ -142,11 +161,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound3Playing = true;
-        poly.triggerAttack(["G#4"]);
+        poly.triggerAttack(["G#3"]);
         spring3.setEndValue(1);
       } else {
         sound3Playing = false;
-        poly.triggerRelease(["G#4"]);
+        poly.triggerRelease(["G#3"]);
         spring3.setEndValue(0);
       }
     }
@@ -159,11 +178,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound4Playing = true;
-        poly.triggerAttack(["B#4"]);
+        poly.triggerAttack(["B#3"]);
         spring4.setEndValue(1);
       } else {
         sound4Playing = false;
-        poly.triggerRelease(["B#4"]);
+        poly.triggerRelease(["B#3"]);
         spring4.setEndValue(0);
       }
     }
@@ -239,7 +258,7 @@ export class ComponentService {
         onSpringUpdate: function (spring) {
           var val = spring.getCurrentValue();
           val = rebound.MathUtil
-            .mapValueInRange(val, 0, 1, 1, 0.5);
+            .mapValueInRange(val, 0, 1, 1, 0.4);
           scale(sound1Layout, val);
         }
       });
@@ -248,7 +267,7 @@ export class ComponentService {
         onSpringUpdate: function (spring) {
           var val = spring.getCurrentValue();
           val = rebound.MathUtil
-            .mapValueInRange(val, 0, 1, 1, 0.5);
+            .mapValueInRange(val, 0, 1, 1, 0.4);
           scale(sound2Layout, val);
         }
       });
@@ -257,7 +276,7 @@ export class ComponentService {
         onSpringUpdate: function (spring) {
           var val = spring.getCurrentValue();
           val = rebound.MathUtil
-            .mapValueInRange(val, 0, 1, 1, 0.5);
+            .mapValueInRange(val, 0, 1, 1, 0.4);
           scale(sound3Layout, val);
         }
       });
@@ -266,7 +285,7 @@ export class ComponentService {
         onSpringUpdate: function (spring) {
           var val = spring.getCurrentValue();
           val = rebound.MathUtil
-            .mapValueInRange(val, 0, 1, 1, 0.5);
+            .mapValueInRange(val, 0, 1, 1, 0.4);
           scale(sound4Layout, val);
         }
       });
