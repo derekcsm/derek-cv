@@ -40,10 +40,10 @@ export class ComponentService {
     }).toMaster();
 
     window.onload = function () {
-      sound1Layout = document.getElementById("chord1");
-      sound2Layout = document.getElementById("chord2");
-      sound3Layout = document.getElementById("chord3");
-      sound4Layout = document.getElementById("chord4");
+      sound1Layout = document.getElementById("sound1");
+      sound2Layout = document.getElementById("sound2");
+      sound3Layout = document.getElementById("sound3");
+      sound4Layout = document.getElementById("sound4");
 
       document.addEventListener("keydown", (key) => {
         if (key.repeat) {
