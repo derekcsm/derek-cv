@@ -1,5 +1,0 @@
-.circle {
-    shape-outside: circle(50% at 50%);
-    clip-path: circle(50% at 50%);
-    background: rgba(0, 0, 0, 0.438);
-}
