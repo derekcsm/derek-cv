@@ -18,7 +18,6 @@ export class ComponentService {
 
     document.documentElement.addEventListener(
       "mousedown", function () {
-        mouse_IsDown = true;
         if (Tone.context.state !== 'running') {
           Tone.context.resume();
         }
