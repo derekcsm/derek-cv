@@ -12,6 +12,9 @@ var sound2Layout;
 var sound3Layout;
 var sound4Layout;
 
+window.downEvt = window.ontouchstart !== undefined ? 'touchstart' : 'mousedown';
+window.upEvt = window.ontouchend !== undefined ? 'touchend' : 'mouseup';
+
 export class ComponentService {
 
   constructor() {
@@ -21,7 +24,7 @@ export class ComponentService {
         if (Tone.context.state !== 'running') {
           Tone.context.resume();
         }
-      })
+      });
 
     var phaser = new Tone.Phaser({
       "frequency": 20,
@@ -62,6 +65,10 @@ export class ComponentService {
       sound2Layout = document.getElementById("sound2");
       sound3Layout = document.getElementById("sound3");
       sound4Layout = document.getElementById("sound4");
+
+      document.body.addEventListener(upEvt, () => {
+        cancelAllSounds();
+      });
 
       document.addEventListener("keydown", (key) => {
         if (key.repeat) {
@@ -186,81 +193,41 @@ export class ComponentService {
       }
     }
 
+    function cancelAllSounds() {
+      poly.releaseAll();
+
+      sound1Playing = false;
+      sound2Playing = false;
+      sound3Playing = false;
+      sound4Playing = false;
+
+      spring1.setEndValue(0);
+      spring2.setEndValue(0);
+      spring3.setEndValue(0);
+      spring4.setEndValue(0);
+    }
+
+    /*
+    Listeners for click & touch events, as well as animation listeners
+    and logic below.
+    */
+
     function connectEventListeners() {
-      sound1Layout.addEventListener("mousedown", () => {
+
+      sound1Layout.addEventListener(downEvt, () => {
         playSound1(true);
       });
-      sound1Layout.addEventListener("touchstart", (e) => {
-        playSound1(true);
-        e.stopPropagation();
-        e.preventDefault();
-        return;
-      });
-      sound1Layout.addEventListener("mouseup", () => {
-        playSound1(false);
-      });
-      sound1Layout.addEventListener("mousemove", () => {
-        playSound1(false);
-      });
-      sound1Layout.addEventListener("touchend", () => {
-        playSound1(false);
-      });
 
-      sound2Layout.addEventListener("mousedown", () => {
+      sound2Layout.addEventListener(downEvt, () => {
         playSound2(true);
       });
-      sound2Layout.addEventListener("touchstart", (e) => {
-        playSound2(true);
-        e.stopPropagation();
-        e.preventDefault();
-        return;
-      });
-      sound2Layout.addEventListener("mouseup", () => {
-        playSound2(false);
-      });
-      sound2Layout.addEventListener("mousemove", () => {
-        playSound2(false);
-      });
-      sound2Layout.addEventListener("touchend", () => {
-        playSound2(false);
-      });
 
-      sound3Layout.addEventListener("mousedown", () => {
+      sound3Layout.addEventListener(downEvt, () => {
         playSound3(true);
       });
-      sound3Layout.addEventListener("touchstart", (e) => {
-        playSound3(true);
-        e.stopPropagation();
-        e.preventDefault();
-        return;
-      });
-      sound3Layout.addEventListener("mouseup", () => {
-        playSound3(false);
-      });
-      sound3Layout.addEventListener("mousemove", () => {
-        playSound3(false);
-      });
-      sound3Layout.addEventListener("touchend", () => {
-        playSound3(false);
-      });
 
-      sound4Layout.addEventListener("mousedown", () => {
+      sound4Layout.addEventListener(downEvt, () => {
         playSound4(true);
-      });
-      sound4Layout.addEventListener("touchstart", (e) => {
-        playSound4(true);
-        e.stopPropagation();
-        e.preventDefault();
-        return;
-      });
-      sound4Layout.addEventListener("mouseup", () => {
-        playSound4(false);
-      });
-      sound4Layout.addEventListener("mousemove", () => {
-        playSound4(false);
-      });
-      sound4Layout.addEventListener("touchend", () => {
-        playSound4(false);
       });
     }
 
