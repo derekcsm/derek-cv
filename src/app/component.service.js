@@ -2,10 +2,10 @@ import * as Tone from "tone";
 import * as rebound from "rebound";
 
 var springSystem = new rebound.SpringSystem();
-var spring1 = springSystem.createSpring(58, 9);
-var spring2 = springSystem.createSpring(58, 9);
-var spring3 = springSystem.createSpring(58, 9);
-var spring4 = springSystem.createSpring(58, 9);
+var spring1 = springSystem.createSpring(69, 9);
+var spring2 = springSystem.createSpring(69, 9);
+var spring3 = springSystem.createSpring(69, 9);
+var spring4 = springSystem.createSpring(69, 9);
 
 var sound1Layout;
 var sound2Layout;
@@ -133,11 +133,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound1Playing = true;
-        poly.triggerAttack(["C#3"]);
+        poly.triggerAttack(["C3"]);
         spring1.setEndValue(1);
       } else {
         sound1Playing = false;
-        poly.triggerRelease(["C#3"]);
+        poly.triggerRelease(["C3"]);
         spring1.setEndValue(0);
       }
     }
@@ -150,11 +150,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound2Playing = true;
-        poly.triggerAttack(["E#3"]);
+        poly.triggerAttack(["E3"]);
         spring2.setEndValue(1);
       } else {
         sound2Playing = false;
-        poly.triggerRelease(["E#3"]);
+        poly.triggerRelease(["E3"]);
         spring2.setEndValue(0);
       }
     }
@@ -167,11 +167,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound3Playing = true;
-        poly.triggerAttack(["G#3"]);
+        poly.triggerAttack(["G3"]);
         spring3.setEndValue(1);
       } else {
         sound3Playing = false;
-        poly.triggerRelease(["G#3"]);
+        poly.triggerRelease(["G3"]);
         spring3.setEndValue(0);
       }
     }
@@ -184,11 +184,11 @@ export class ComponentService {
 
       if (clickDown) {
         sound4Playing = true;
-        poly.triggerAttack(["B#3"]);
+        poly.triggerAttack(["Bb3"]);
         spring4.setEndValue(1);
       } else {
         sound4Playing = false;
-        poly.triggerRelease(["B#3"]);
+        poly.triggerRelease(["Bb3"]);
         spring4.setEndValue(0);
       }
     }
